@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оқшау сөздер - Бекіту сұрақтары</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --dark-blue: #0A192F;
+            --accent-red: #8B0000;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            background-image: 
+                linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.9)),
+                url('https://www.transparenttextures.com/patterns/dark-leather.png'); /* Тері текстурасы */
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Фондық батырлық элементтер */
+        .bg-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .ornament-top {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 50px;
+            color: var(--gold);
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 900px;
+            width: 95%;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-shadow: 2px 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Сұрақтар блогы */
+        .quiz-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .question-card {
+            background: var(--glass);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        /* Hover эффектісі */
+        .question-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .question-card::before {
+            content: '🛡️'; /* Қалқан символы */
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            opacity: 0.2;
+            transition: 0.3s;
+        }
+
+        .question-card:hover::before {
+            opacity: 0.8;
+            transform: translateY(-50%) rotate(360deg);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0;
+            transition: 0.3s;
+        }
+
+        /* Жауаптар (бастапқыда жасыру) */
+        .answer-text {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.5s ease;
+            color: #ccc;
+            margin-top: 0;
+            font-style: italic;
+            border-left: 3px solid var(--gold);
+            padding-left: 15px;
+        }
+
+        /* Белсенді болғанда жауапты көрсету */
+        .question-card.active .answer-text {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .question-card.active .question-text {
+            color: var(--gold);
+        }
+
+        /* Ою-өрнек символы */
+        .ornament-icon {
+            display: block;
+            margin: 20px auto;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--gold);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-elements">
+        <div class="ornament-top">𐩕 𐩖 𐩗</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Бекіту сұрақтары</h1>
+            <p>Оқшау сөздер бөлімі бойынша біліміңді тексер</p>
+        </header>
+
+        <div class="quiz-grid">
+            <div class="question-card" onclick="this.classList.toggle('active')">
+                <p class="question-text">Оқшау сөз дегеніміз не?</p>
+                <div class="answer-text">
+                    Сөйлем мүшелерімен грамматикалық байланысқа түспейтін, сөйлемдегі ойға сөйлеушінің әртүрлі көзқарасын, қарым-қатынасын білдіретін сөздер.
+                </div>
+            </div>
+
+            <div class="question-card" onclick="this.classList.toggle('active')">
+                <p class="question-text">Оқшау сөздің қандай түрлері бар?</p>
+                <div class="answer-text">
+                    Оқшау сөздер мағыналық және қызметтік ерекшелігіне қарай үш түрге бөлінеді: Қаратпа, Қыстырма және Одағай сөздер.
+                </div>
+            </div>
+
+            <div class="question-card" onclick="this.classList.toggle('active')">
+                <p class="question-text">Қаратпа сөз сөйлемде қандай қызмет атқарады?</p>
+                <div class="answer-text">
+                    Тыңдаушының назарын өзіне аудару үшін қолданылады. Ол сөйлем мүшесі бола алмайды, бірақ сөйлемнің басында, ортасында не аяғында келе береді.
+                </div>
+            </div>
+
+            <div class="question-card" onclick="this.classList.toggle('active')">
+                <p class="question-text">Қыстырма сөздің мағынасы қандай және ол не үшін қолданылады?</p>
+                <div class="answer-text">
+                    Сөйлеушінің айтылған ойға қатысты сенуін, күмәндануын, өкінішін немесе ойдың кімнен шыққанын білдіру үшін қолданылады (Мәселен: Әрине, меніңше, амал не).
+                </div>
+            </div>
+
+            <div class="question-card" onclick="this.classList.toggle('active')">
+                <p class="question-text">Одағай сөздер қандай сезімді білдіреді? Мысал келтір.</p>
+                <div class="answer-text">
+                    Адамның көңіл-күйін, сезімін (қуаныш, таңданыс, қорқыныш, реніш) білдіреді. Мысалы: Пәлі! (ризашылық), Ойбай! (қорқыныш), Алақай! (қуаныш).
+                </div>
+            </div>
+        </div>
+
+        <div class="ornament-icon"></div>
+
+        <footer>
+            <p>&copy; 2026 "Ұлы Дала Мұрасы" білім беру порталы</p>
+        </footer>
+    </div>
+
+    <script>
+        // Интерактивтілік: Бір сұрақты ашқанда басқаларын жабуға болады (міндетті емес)
+        // Қазіргі нұсқада әрқайсысы жеке ашылып-жабылады.
+    </script>
+</body>
+</html>

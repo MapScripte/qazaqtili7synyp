@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бауыржан Момышұлы: Ерлік пен Намыс</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-blue: #0a192f;
+            --accent-blue: #172a45;
+            --text-light: #e6f1ff;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: var(--text-light);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Page Load Animation */
+        .page-transition {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--gold);
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        /* Decorative Elements */
+        .bg-element {
+            position: fixed;
+            opacity: 0.07;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .ornament-top { top: 0; width: 100%; height: 50px; background: url('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/dharmachakra.svg') repeat-x center; }
+        .eagle { top: 20%; right: 5%; width: 250px; }
+        .shield { bottom: 10%; left: 5%; width: 180px; }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), 
+                        url('https://images.unsplash.com/photo-1599408162165-8b82907408f3?auto=format&fit=crop&q=80') center/cover;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            opacity: 0.8;
+        }
+
+        /* Container & Cards */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .group-card {
+            background: var(--accent-blue);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .group-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.5);
+        }
+
+        .group-number {
+            position: absolute;
+            top: -20px;
+            right: 30px;
+            background: var(--gold);
+            color: var(--dark-blue);
+            padding: 5px 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .group-card h3 {
+            color: var(--gold);
+            margin-bottom: 30px;
+            font-size: 1.4rem;
+            border-left: 4px solid var(--gold);
+            padding-left: 15px;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-list li {
+            margin-bottom: 18px;
+            line-height: 1.5;
+            padding-left: 25px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .task-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        .task-list li:hover {
+            color: var(--gold);
+            transform: translateX(8px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .scroll-icon {
+            margin-top: 30px;
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--text-light);
+            border-radius: 15px;
+            position: relative;
+        }
+        .scroll-icon::after {
+            content: "";
+            width: 4px; height: 8px;
+            background: var(--gold);
+            position: absolute;
+            top: 10px; left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            animation: scrollWheel 2s infinite;
+        }
+        @keyframes scrollWheel {
+            0% { opacity: 1; top: 10px; }
+            100% { opacity: 0; top: 30px; }
+        }
+    </style>
+</head>
+<body onload="document.querySelector('.page-transition').style.transform = 'translateY(100%)'">
+
+    <div class="page-transition"></div>
+
+    <svg class="bg-element eagle" viewBox="0 0 24 24" fill="white"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"/></svg>
+
+    <header>
+        <h1>Ерлік Сабағы</h1>
+        <p class="subtitle">Бауыржан Момышұлының мұрасы</p>
+        <div class="scroll-icon"></div>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            <div class="group-card">
+                <div class="group-number">1-ТОП</div>
+                <h3>Тақырып, негізгі ой және дауыс ырғағы</h3>
+                <ul class="task-list">
+                    <li>Мәтіннің тақырыбын анықтаңыз.</li>
+                    <li>Негізгі ойды 1–2 сөйлеммен жазыңыз.</li>
+                    <li>Оқиғаны оқығанда қандай дауыс ырғағы қолданылған? (жігерлі, сенімді, байсалды).</li>
+                    <li>Неліктен дәл сол интонация маңызды деп ойлайсыз?</li>
+                </ul>
+            </div>
+
+            <div class="group-card">
+                <div class="group-number">2-ТОП</div>
+                <h3>Сөйлеу мәнері және мәтін құрылымы</h3>
+                <ul class="task-list">
+                    <li>Бауыржан Момышұлы өз ойын қалай жеткізеді? (батыл, сенімді, әсерлі).</li>
+                    <li>Мәтіннің сөйлеу стилін анықтаңыз (көркем немесе публицистикалық).</li>
+                    <li>Мәтіннен 2 ең әсерлі сөйлемді таңдап жазыңыз.</li>
+                    <li>Бұл сөйлемдерді қандай дауыс ырғағымен оқу керек? Неге?</li>
+                </ul>
+            </div>
+
+            <div class="group-card">
+                <div class="group-number">3-ТОП</div>
+                <h3>Ерлік және тұлға бейнесі</h3>
+                <ul class="task-list">
+                    <li>Бауыржан Момышұлы кім? (3–4 сөйлеммен тұлғалық портрет).</li>
+                    <li>Мәтінде нақты қандай оқиға баяндалған?</li>
+                    <li>Осы оқиғадан қандай ерлік нышаны көрінеді?</li>
+                    <li>Батырдың мінезін сипаттайтын 2 негізгі қасиетті жазыңыз.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>«Ер есімі — ел есінде»</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">© 2026 Ашық сабақ материалы</p>
+    </footer>
+
+    <script>
+        // Reveal elements on scroll
+        const observerOptions = { threshold: 0.2 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.group-card').forEach(card => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(50px)";
+            card.style.transition = "all 0.8s ease-out";
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

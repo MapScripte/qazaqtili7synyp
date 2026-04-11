@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ашық сабақ: Қазақ тілі | Батырлар рухы</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --deep-blue: #0A192F;
+            --text-dark: #2C3E50;
+        }
+
+        body { font-family: 'Montserrat', sans-serif; background: #f0f4f8; color: #1a365d; }
+
+        .ornament-pattern {
+            opacity: 0.05;
+            background-image: url('https://www.svgrepo.com/show/305282/kazakhstan.svg');
+            background-size: 100px;
+        }
+
+        .page-transition { animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Iframe терезесінің стилі */
+        .content-frame {
+            width: 110%;
+            height: 90vh;
+            border: none;
+            background: white;
+            display: block;
+        }
+        
+    </style>
+</head>
+<body x-data="lessonApp()">
+
+    <template x-if="page === 'home'">
+        <div class="page-transition min-h-screen relative overflow-hidden">
+            <div class="fixed inset-0 ornament-pattern -z-10"></div>
+            
+            <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 px-6 py-4 border-b border-blue-100 flex justify-between items-center shadow-sm">
+                <div class="font-black text-2xl text-blue-600 flex items-center gap-2">
+                    <span>🦅</span> RUH<span class="text-yellow-500">BILIM</span>
+                </div>
+                
+            </nav>
+
+            <main class="pt-32 pb-12 px-4 max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl md:text-7xl font-black text-blue-950 mb-4 animate__animated animate__fadeInDown">
+                        ҚОШ КЕЛДІҢІЗДЕР! <br>
+                        <span class="text-blue-600 uppercase">Ашық сабақ</span>
+                    </h1>
+                    
+                    <div class="flex flex-col items-center mt-8">
+                        <img src="мұғалім.png" class="w-60 h-50 rounded-full border-4 border-white shadow-2xl mb-4">
+                        <p class="text-2xl font-bold text-slate-800 italic">Ерғазиева Гүлмира Бекетқызы | Қазақ тілі | 7-сынып</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 backdrop-blur-md p-10 rounded-[50px] border-2 border-blue-100 shadow-xl max-w-4xl mx-auto mb-16 relative">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 text-7xl">🎯</div>
+                    <h2 class="text-2xl font-black text-blue-900 mb-8 flex items-center gap-3 uppercase">
+                        Сабақтың негізгі мақсаттары
+                    </h2>
+                    <div class="grid md:grid-cols-2 gap-8 text-slate-700 font-bold leading-relaxed">
+                        <div class="flex items-start gap-4 p-5 bg-blue-50 rounded-3xl border border-blue-100">
+                            <span class="text-3xl">🏹</span> 
+                            <p>Мәтін тақырыбы, сөйлеушінің дауыс ырғағы мен сөйлеу мәнері арқылы негізгі ойды анықтау.</p>
+                        </div>
+                        <div class="flex items-start gap-4 p-5 bg-yellow-50 rounded-3xl border border-yellow-100">
+                            <span class="text-3xl">🛡️</span> 
+                            <p>Оқшау сөздердің қызметін түсіну, ажырата білу. </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-center text-xl font-black text-blue-900 mb-10 uppercase tracking-[0.4em]">Сабақ кезеңдері</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6 mb-20">
+                    <template x-for="item in menuItems" :key="item.id">
+                        <button @click="changePage(item)" class="bg-white p-8 rounded-[35px] border border-blue-50 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all flex flex-col items-center gap-4 group">
+                            <span class="text-5xl group-hover:scale-125 transition-transform" x-text="item.icon"></span>
+                            <span class="text-[10px] font-black text-blue-900 uppercase text-center tracking-tighter" x-text="item.title"></span>
+                        </button>
+                    </template>
+                </div>
+            </main>
+        </div>
+    </template>
+
+    <template x-if="page !== 'home'">
+        <div class="page-transition min-h-screen bg-slate-100 flex flex-col">
+            <nav class="p-6 bg-white shadow-md flex justify-between items-center">
+                <button @click="page = 'home'" class="bg-[#0A192F] text-white px-8 py-3 rounded-full font-bold uppercase text-xs hover:bg-[#D4AF37] transition-all shadow-xl">
+                    <i class="fas fa-arrow-left mr-2"></i> МӘЗІРГЕ ҚАЙТУ
+                </button>
+                <h2 class="text-xl font-black text-blue-900 uppercase" x-text="currentTitle"></h2>
+                <div class="w-10"></div>
+            </nav>
+
+            <div class="flex-grow p-4 md:p-8 relative">
+                <div class="max-w-[2200px] mx-auto h-full shadow-2x1 rounded-[40px] overflow-hidden border-8 border-white bg-white">
+                    <iframe :src="currentFile" class="content-frame"></iframe>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        function lessonApp() {
+            return {
+                page: 'home',
+                score: 0,
+                currentFile: '',
+                currentTitle: '',
+                
+                // ОСЫ ЖЕРДЕ ӨЗ ФАЙЛДАРЫҢЫЗДЫҢ АТАУЫН ЖАЗЫҢЫЗ
+                menuItems: [
+                    {id:'psychology', icon:'🧠', title:'Ахуал', file: 'ахуал.html'},
+                    {id:'teams',       icon:'👥', title:'Топқа бөлу', file: 'топқа бөлу.html'},
+                    {id:'theory',      icon:'📖', title:'Жаңа тақырып', file: 'жаңа тақырып.html'},
+                    {id:'group-work',  icon:'🤝', title:'Топтық жұмыс', file: 'топтық жұмыс.html'},
+                    {id:'individual',  icon:'✍️', title:'Жеке жұмыс', file: 'жеке жұмыс.html'},
+                    {id:'warmup',      icon:'🎯', title:'Сергіту сәті', file: 'сергіту сәті.html'},
+                    {id:'pair-work',   icon:'💬', title:'Жұптық жұмыс', file: 'жұптық жұмыс.html'},
+                    {id:'quiz',        icon:'❓', title:'Бекіту', file: 'бекіту сұрақтары.html'},
+                    {id:'feedback',    icon:'🔁', title:'Кері байланыс', file: 'кері б.html'},
+                    {id:'final',       icon:'🏆', title:'Бағалау', file: 'бағалау.html'}
+                ],
+
+                changePage(item) {
+                    this.currentTitle = item.title;
+                    this.currentFile = item.file;
+                    this.page = item.id;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

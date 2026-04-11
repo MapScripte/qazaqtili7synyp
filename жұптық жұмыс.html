@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Батырлар Тапсырмасы — Жұптық Жұмыс</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #C5A021;
+            --dark: #1a1a1a;
+            --white: #ffffff;
+            --gray-bg: #f4f4f4;
+            --border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Анимациялық фон элементтері */
+        .bg-ornament {
+            position: fixed;
+            top: 10%;
+            left: -50px;
+            font-size: 20rem;
+            opacity: 0.03;
+            z-index: -1;
+            transform: rotate(-15deg);
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: var(--white);
+            border-bottom: 5px solid var(--gold);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            margin-top: 10px;
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        /* Негізгі тор (3 бағана) */
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .hero-column {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-column:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            border-color: var(--gold);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: 0.5s;
+        }
+
+        .hero-column:hover .hero-img {
+            filter: grayscale(0%);
+        }
+
+        .hero-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            text-align: center;
+            min-height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid var(--gray-bg);
+        }
+
+        .hero-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            height: 200px;
+            overflow-y: auto;
+            padding-right: 10px;
+            text-align: justify;
+        }
+
+        /* Скроллбар стилі */
+        .hero-text::-webkit-scrollbar { width: 4px; }
+        .hero-text::-webkit-scrollbar-thumb { background: var(--gold); }
+
+        .section-title {
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 15px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-list {
+            list-style: none;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .task-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Ой бөлісу (Lined Space) */
+        .opinion-box {
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .lined-input {
+            width: 100%;
+            height: 120px;
+            background-image: linear-gradient(#d1d1d1 1px, transparent 1px);
+            background-size: 100% 25px;
+            line-height: 25px;
+            border: none;
+            background-color: transparent;
+            resize: none;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        /* Талаптар блогы */
+        .rules-tag {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        .rules-tag ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rules-tag li {
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        .rules-tag li b { color: var(--gold); }
+
+        @media (max-width: 1100px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .hero-column { max-width: 600px; margin: 0 auto; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .smooth-entry {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <i class="fas fa-shield-halved bg-ornament"></i>
+
+    <header class="smooth-entry">
+        <h1>ҚАЗАҚТЫҢ БАТЫР ТҰЛҒАЛАРЫ</h1>
+        <p>Жұптық жұмыс: Ой бөліс</p>
+    </header>
+
+    <main class="main-grid">
+
+        <article class="hero-column smooth-entry" style="animation-delay: 0.2s;">
+            <img src="Бауыржан М.jpg" class="hero-img" alt="Бауыржан Момышұлы">
+            <div class="hero-content">
+                <h2>“Бауыржан Момышұлы — ерлік пен тәртіп символы”</h2>
+                <div class="hero-text">
+                    Бауыржан Момышұлы — Ұлы Отан соғысында аты аңызға айналған қолбасшы, жазушы және батыр. Ол 1910 жылы Жамбыл облысында дүниеге келген. Әскери тәртіпті қатаң ұстанатын, өте тәртіпті және стратегиялық ойлау қабілеті жоғары офицер болған.
+
+Бауыржан Момышұлы Мәскеу түбіндегі шайқаста генерал Панфилов басқарған дивизия құрамында ерекше ерлік көрсетті. Ол басқарған бөлімдер бірнеше рет жаудың шабуылын тойтарып, стратегиялық маңызды позицияларды сақтап қалды.
+
+Оның тактикалық шешімдері мен батылдығы әскердің жеңісіне үлкен үлес қосты. Бауыржан Момышұлы соғыстан кейін де әскери тәртіп пен патриотизм туралы көптеген еңбектер жазды.
+
+Ол ресми түрде көп уақыт бойы жоғары марапат алмаса да, халық оны нағыз халық батыры ретінде құрметтейді.
+                </div>
+
+                <div class="section-title"><i class="fas fa-tasks"></i> Тапсырмалар:</div>
+                <ul class="task-list">
+                    <li>1. Қандай ерлік істер жасады?</li>
+                    <li>2. Қай шайқаста көзге түсті?</li>
+                    <li>3. Қай қасиеттері оны батыр етті?</li>
+                    <li>4. Халық не үшін құрметтейді?</li>
+                </ul>
+
+                <div class="section-title"><i class="fas fa-pen-nib"></i> Ой бөлісу:</div>
+                <div class="opinion-box">
+                    <textarea class="lined-input" placeholder="Өз көзқарасыңызды жазыңыз..."></textarea>
+                </div>
+
+                <div class="rules-tag">
+                    <b>Талаптар:</b>
+                    <ul>
+                        <li>• Тақырыптан ауытқымау</li>
+                        <li>• Мақал-мәтел, фрезеологиялық тіркестерді қолдану</li>
+                        <li>• Одағайлар: "Уа!", "Алақай!", т.б.</li>
+                        <li>• Ойды жүйелі жеткізу</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+        <article class="hero-column smooth-entry" style="animation-delay: 0.4s;">
+            <img src="Мәншүк.jpg" class="hero-img" alt="Мәншүк Мәметова">
+            <div class="hero-content">
+                <h2>“Мәншүк Мәметова — ержүрек батыр қыз”</h2>
+                <div class="hero-text">
+                    Мәншүк Мәметова — қазақ халқының тағы бір батыр қызы. Ол 1922 жылы Батыс Қазақстан өңірінде дүниеге келген. Жастайынан мейірімді, бірақ қайсар мінезді болып өсті. Соғыс басталғанда ол да өз еркімен майданға аттанды.
+
+Мәншүк пулеметші ретінде шайқасты. Ол Невель қаласы үшін болған қанды ұрыста ерекше ерлік көрсетті. Жау күштері көп болса да, Мәншүк соңына дейін шайқасып, пулеметінен оқ жаудырып, қарсыластарға үлкен соққы берді.
+
+Сол шайқаста ол ауыр жараланса да, соңғы деміне дейін күресті. Мәншүк Мәметова — қазақ тарихындағы алғашқы әйел Кеңес Одағының Батыры атағын алған тұлғалардың бірі.
+
+Оның ерлігі — қайсарлық пен Отанға адалдықтың символы.
+                </div>
+
+                <div class="section-title"><i class="fas fa-tasks"></i> Тапсырмалар:</div>
+                <ul class="task-list">
+                    <li>1. Қандай ерлік жасады?</li>
+                    <li>2. Қай шайқаста көзге түсті?</li>
+                    <li>3. Қандай батырлық қасиеттерін атап айтуға болады?</li>
+                    <li>4. Не үшін халық батыры атанды?</li>
+                </ul>
+
+                <div class="section-title"><i class="fas fa-pen-nib"></i> Ой бөлісу (Айдар):</div>
+                <div class="opinion-box">
+                    <textarea class="lined-input" placeholder="Өз көзқарасыңызды жазыңыз..."></textarea>
+                </div>
+
+                <div class="rules-tag">
+                    <b>Талаптар:</b>
+                    <ul>
+                        <li>• Тақырыптан ауытқымау</li>
+                        <li>• Мақал-мәтел, фрезеологиялық тіркестерді қолдану</li>
+                        <li>• Одағайлар: "Уа!", "Алақай!", т.б.</li>
+                        <li>• Ойды жүйелі жеткізу</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+        <article class="hero-column smooth-entry" style="animation-delay: 0.6s;">
+            <img src="әлия.jpg" class="hero-img" alt="Әлия Молдағұлова">
+            <div class="hero-content">
+                <h2>“Әлия Молдағұлова — батыр қыз”</h2>
+                <div class="hero-text">
+                    Әлия Молдағұлова — Ұлы Отан соғысы жылдарында ерекше ерлік көрсеткен қазақтың батыр қызы. Ол 1925 жылы дүниеге келген. Әлия жастайынан жетім қалып, кейін Ленинградтағы балалар үйінде тәрбиеленді. Соғыс басталғанда ол өз еркімен майданға сұранып, мергендер мектебінде оқыды.
+
+Әлия Молдағұлова майданда мерген (снайпер) ретінде жауға қарсы шайқасты. Ол көптеген жау сарбаздарын жойып, кеңес әскері қатарында үлкен беделге ие болды. Оның ең үлкен ерлігі 1944 жылы Псков облысы маңындағы шайқаста көрінді. Сол ұрыста ол жауға қарсы шабуыл кезінде ерекше батылдық танытып, ерлікпен қаза тапты.
+
+Әлияның ерлігі — Отанға деген сүйіспеншілік пен батырлықтың жарқын үлгісі. Ол қайтыс болғаннан кейін Кеңес Одағының Батыры атағына ие болды.
+                </div>
+
+                <div class="section-title"><i class="fas fa-tasks"></i> Тапсырмалар:</div>
+                <ul class="task-list">
+                    <li>1. Қандай ерлік істер жасады?</li>
+                    <li>2. Қандай батыр ретінде сипатталған?</li>
+                    <li>3. Қандай қасиеттері әсер етті?</li>
+                    <li>4. Оның орнында болсаң не істер едің?</li>
+                </ul>
+
+                <div class="section-title"><i class="fas fa-pen-nib"></i> Ой бөлісу (Оқушы жауабы):</div>
+                <div class="opinion-box">
+                    <textarea class="lined-input" placeholder="Өз көзқарасыңызды жазыңыз..."></textarea>
+                </div>
+
+                <div class="rules-tag">
+                    <b>Талаптар:</b>
+                    <ul>
+                        <li>• Тақырыптан ауытқымау</li>
+                        <li>• Мақал-мәтел, фрезеологиялық тіркестерді қолдану</li>
+                        <li>• Одағайлар: "Уа!", "Алақай!", т.б.</li>
+                        <li>• Ойды жүйелі жеткізу</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Жұптық жұмыс. Оқушыларға арналған интерактивті платформа.</p>
+    </footer>
+
+</body>
+</html>

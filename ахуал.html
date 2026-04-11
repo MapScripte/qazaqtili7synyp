@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomad Strategy: Тұлғалық Даму</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00d4ff;
+            --neon-purple: #9d00ff;
+            --gold: #ffcc00;
+            --dark-space: #05060a;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--dark-space);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Динамикалық фон */
+        .bg-stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #111425 0%, #05060a 100%);
+            z-index: -1;
+        }
+
+        .ornament-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            opacity: 0.3;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .subtitle {
+            color: var(--neon-blue);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        /* Таңдау карталары */
+        .grid-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.05);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .card i {
+            font-size: 50px;
+            display: block;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px var(--neon-blue));
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        /* Жасырын нәтиже */
+        #result-screen {
+            display: none;
+            padding: 40px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(157, 0, 255, 0.1), rgba(0, 212, 255, 0.1));
+            border: 1px solid var(--neon-purple);
+            animation: zoomIn 0.6s ease;
+        }
+
+        .final-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .final-btn:hover {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-stars">
+        <div class="ornament-overlay"></div>
+    </div>
+
+    <div class="container" id="main-container">
+        <div id="start-screen">
+            <h1>БҮГІНГІ СТРАТЕГИЯ</h1>
+            <p class="subtitle">ӨЗ СТРАТЕГИЯҢДЫ ТАҢДА: БҮГІН КІМ БОЛАСЫҢ?</p>
+            
+            <div class="grid-options">
+                <div class="card" onclick="showResult('Ақылман', 'Сенің бүгінгі басты қаруың — логика мен зеректік. Күрделі сұрақтар сені қорқыта алмайды!')">
+                    <i>🧠</i>
+                    <h3>АҚЫЛМАН</h3>
+                    <p>Талдау және терең білім бағытын таңдаймын.</p>
+                </div>
+
+                <div class="card" onclick="showResult('Жалын', 'Сенің бойыңдағы энергия бүкіл сыныпқа жетеді. Көшбасшы бол, бастама көтер!')">
+                    <i>🔥</i>
+                    <h3>ЖАЛЫН</h3>
+                    <p>Белсенділік пен креатив бағытын таңдаймын.</p>
+                </div>
+
+                <div class="card" onclick="showResult('Тұңғиық', 'Сабырлылық — сенің күшің. Бүгін сен ақпаратты терең меңгеріп, маңызды детальдарды байқайсың.')">
+                    <i>🌊</i>
+                    <h3>ТҰҢҒИЫҚ</h3>
+                    <p>Сабырлылық пен жинақылық бағытын таңдаймын.</p>
+                </div>
+
+                <div class="card" onclick="showResult('Болат', 'Сенің ерік-жігерің мықты. Бүгінгі мақсатыңа қандай кедергі болса да жетесің!')">
+                    <i>🛡️</i>
+                    <h3>БОЛАТ</h3>
+                    <p>Төзімділік пен нәтиже бағытын таңдаймын.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen">
+            <h2 id="result-title" style="color: var(--gold); font-size: 2.5rem;"></h2>
+            <p id="result-desc" style="font-size: 1.4rem; line-height: 1.6;"></p>
+            <p style="margin-top: 20px; color: var(--neon-blue);">Ендеше, осы қасиетіңмен сабақты бастайық!</p>
+            <button class="final-btn" onclick="reset()">Басқа қасиетті көру</button>
+        </div>
+    </div>
+
+    <script>
+        function showResult(title, desc) {
+            document.getElementById('start-screen').style.display = 'none';
+            const resultScreen = document.getElementById('result-screen');
+            resultScreen.style.display = 'block';
+            
+            document.getElementById('result-title').innerText = title;
+            document.getElementById('result-desc').innerText = desc;
+        }
+
+        function reset() {
+            document.getElementById('result-screen').style.display = 'none';
+            document.getElementById('start-screen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

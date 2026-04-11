@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тұрақты Сақтау Жүйесі</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-blue: #050a14;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --accent: #e6be8a;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+
+        body {
+            background-color: var(--dark-blue);
+            color: #fff;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 50%, #1a365d 0%, #050a14 100%);
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        header { padding: 40px 20px; text-align: center; }
+
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 50px; }
+
+        .input-area {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(15px);
+            margin-bottom: 40px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            color: white;
+            padding: 15px;
+            font-size: 1rem;
+            resize: none;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .controls { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border: none;
+        }
+
+        .btn-gold { background: var(--gold); color: var(--dark-blue); }
+        .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .group-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            min-height: 150px;
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .group-title { color: var(--accent); font-weight: 700; }
+
+        .student-item {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            border-left: 3px solid var(--gold);
+        }
+
+        .count-badge {
+            background: var(--gold);
+            color: var(--dark-blue);
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Ерлік пен Кәсібилік</h1>
+        <p style="opacity: 0.7;">Ақпаратты тұрақты сақтау жүйесі</p>
+    </header>
+
+    <div class="container">
+        <div class="input-area">
+            <h3 style="margin-bottom: 10px; color: var(--accent);">Оқушылар тізімі:</h3>
+            <textarea id="bulkInput" oninput="saveDraft()" placeholder="Оқушы есімдерін осында жазыңыз..."></textarea>
+            
+            <div class="controls">
+                <button class="btn btn-gold" onclick="addAndDistribute()">Топтарға Бөлу</button>
+                <button class="btn btn-outline" onclick="clearAllData()">Барлығын Тазалау</button>
+            </div>
+        </div>
+
+        <div class="groups-grid">
+            <div class="group-card">
+                <div class="group-header">
+                    <span>🛡️</span> <span class="group-title">Қайсар Батырлар</span>
+                    <span id="count-1" class="count-badge">0</span>
+                </div>
+                <div id="list-1"></div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-header">
+                    <span>⚔️</span> <span class="group-title">Кәсіби Шеберлер</span>
+                    <span id="count-2" class="count-badge">0</span>
+                </div>
+                <div id="list-2"></div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-header">
+                    <span>🦅</span> <span class="group-title">Алтын Қыран</span>
+                    <span id="count-3" class="count-badge">0</span>
+                </div>
+                <div id="list-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Бет жүктелгенде барлық сақталған деректі қалпына келтіру
+        window.onload = function() {
+            loadAllData();
+        };
+
+        // 1. Тек мәтіндік өрістегі жазуды сақтау (черновик)
+        function saveDraft() {
+            const currentText = document.getElementById('bulkInput').value;
+            localStorage.setItem('teacher_draft_text', currentText);
+        }
+
+        // 2. Оқушыларды топқа бөлу және сақтау
+        function addAndDistribute() {
+            const input = document.getElementById('bulkInput');
+            const text = input.value.trim();
+            
+            if (!text) {
+                alert("Алдымен оқушы есімдерін жазыңыз!");
+                return;
+            }
+
+            const names = text.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+            let students = []; // Жаңадан бөлу (егер бұрынғыны өшіріп, жаңадан бөлгіңіз келсе)
+
+            names.sort(() => Math.random() - 0.5);
+
+            names.forEach((name, index) => {
+                const groupId = (index % 3) + 1; // 1, 2, 3 топтарға кезекпен бөлу
+                students.push({ name: name, groupId: groupId });
+            });
+
+            // Жадыға сақтау
+            localStorage.setItem('teacher_final_list', JSON.stringify(students));
+            
+            // Экранға шығару
+            renderAll(students);
+            alert("Оқушылар сәтті бөлінді!");
+        }
+
+        // 3. Экранға деректерді шығару функциясы
+        function renderAll(students) {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`list-${i}`).innerHTML = '';
+                const count = students.filter(s => s.groupId === i).length;
+                document.getElementById(`count-${i}`).textContent = count;
+            }
+
+            students.forEach(student => {
+                const container = document.getElementById(`list-${student.groupId}`);
+                const div = document.createElement('div');
+                div.className = 'student-item';
+                div.textContent = student.name;
+                container.appendChild(div);
+            });
+        }
+
+        // 4. Барлық деректі браузер жадынан жүктеу
+        function loadAllData() {
+            // Мәтіндік өрісті қалпына келтіру
+            const savedDraft = localStorage.getItem('teacher_draft_text');
+            if (savedDraft) {
+                document.getElementById('bulkInput').value = savedDraft;
+            }
+
+            // Бөлінген тізімді қалпына келтіру
+            const savedList = localStorage.getItem('teacher_final_list');
+            if (savedList) {
+                renderAll(JSON.parse(savedList));
+            }
+        }
+
+        // 5. Толық тазалау
+        function clearAllData() {
+            if (confirm("Барлық жазбалар мен топтарды өшіресіз бе?")) {
+                localStorage.removeItem('teacher_draft_text');
+                localStorage.removeItem('teacher_final_list');
+                document.getElementById('bulkInput').value = '';
+                renderAll([]);
+            }
+        }
+    </script>
+</body>
+</html>

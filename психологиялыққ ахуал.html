@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Психологиялық ахуал: Ерлік пен Кәсібилік</title>
+    <style>
+        :root {
+            --primary-neon: #00f2ff;
+            --secondary-neon: #7000ff;
+            --bg-dark: #0a0b10;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at center, #1a1b25 0%, #0a0b10 100%);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Кибер-фон элементтері */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(var(--glass-bg) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--glass-bg) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+        }
+
+        h1 {
+            color: var(--primary-neon);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-shadow: 0 0 10px var(--primary-neon);
+        }
+
+        .step-display {
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .action-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--secondary-neon));
+            animation: pulse 2s infinite;
+        }
+
+        .instruction-text {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1.4;
+            color: #fff;
+        }
+
+        .sub-text {
+            font-size: 18px;
+            color: var(--primary-neon);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            background: transparent;
+            border: 2px solid var(--primary-neon);
+            color: var(--primary-neon);
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: var(--primary-neon);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--primary-neon);
+        }
+
+        button:disabled {
+            border-color: #555;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        .conclusion {
+            display: none;
+            background: rgba(112, 0, 255, 0.1);
+            border: 1px solid var(--secondary-neon);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .conclusion p {
+            font-size: 22px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #222;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-neon);
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--primary-neon);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+
+    <div class="container">
+        <h1>Психологиялық ахуал: «Ерлік пен Кәсібилік»</h1>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="training-area">
+            <div class="step-display">
+                <div id="icon" class="action-icon">🤝</div>
+                <div id="text" class="instruction-text">Дайын болсаңыз, «Бастау» батырмасын басыңыз</div>
+                <div id="subtext" class="sub-text">Мұғаліммен бірге қимылдарды қайталаңыз</div>
+            </div>
+
+            <div class="controls">
+                <button id="nextBtn" onclick="nextStep()">Бастау</button>
+            </div>
+        </div>
+
+        <div id="final-speech" class="conclusion">
+            <div class="action-icon">🇰🇿</div>
+            <p id="teacher-conclusion"></p>
+        </div>
+    </div>
+
+    <script>
+        const steps = [
+            {
+                icon: "🛡️",
+                text: "Қолымызды кеудемізге қойып, түзу тұрамыз",
+                subtext: "Ел қорғаған батырлардың рухын сезінеміз"
+            },
+            {
+                icon: "⚡",
+                text: "Қолымызды алға созып, жұдырықты түйеміз",
+                subtext: "Бойымыздағы күш пен жігерді жинаймыз"
+            },
+            {
+                icon: "⚙️",
+                text: "Саусақтарымызды айқастырып, берік ұстаймыз",
+                subtext: "Кәсіби білім — біздің басты қаруымыз"
+            },
+            {
+                icon: "🚀",
+                text: "Қолымызды жоғары көтеріп, алақанды ашамыз",
+                subtext: "Болашаққа нық қадам басамыз!"
+            }
+        ];
+
+        let currentStep = -1;
+
+        function nextStep() {
+            currentStep++;
+            const nextBtn = document.getElementById('nextBtn');
+            const progress = document.getElementById('progress');
+            
+            if (currentStep < steps.length) {
+                // Қадамдарды көрсету
+                document.getElementById('icon').innerText = steps[currentStep].icon;
+                document.getElementById('text').innerText = steps[currentStep].text;
+                document.getElementById('subtext').innerText = steps[currentStep].subtext;
+                
+                nextBtn.innerText = "Келесі қимыл";
+                
+                // Прогресс жолағын жаңарту
+                let progressPercent = ((currentStep + 1) / steps.length) * 100;
+                progress.style.width = progressPercent + "%";
+                
+            } else {
+                // Қорытынды бөлім
+                document.getElementById('training-area').style.display = 'none';
+                const finalDiv = document.getElementById('final-speech');
+                finalDiv.style.display = 'block';
+                
+                const conclusionText = "Ел үшін ерлік жасаған батырлар сияқты, әрқайсың өз ісіңнің маманы болсаңдар – бұл да ерлік. Себебі болашағы зор маман – ел болашағы!";
+                
+                // Мәтінді жазу эффектісі (опционалды)
+                document.getElementById('teacher-conclusion').innerText = conclusionText;
+            }
+        }
+    </script>
+</body>
+</html>

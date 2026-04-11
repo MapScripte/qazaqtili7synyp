@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Батырлар Ойыны: Иә-Жоқ-Ой!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --dark: #0A192F;
+            --white: #FFFFFF;
+            --red: #FF4C4C;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .pattern-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/black-paper.png');
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .game-container {
+            width: 90%;
+            max-width: 950px;
+            padding: 50px;
+            border: 3px solid var(--gold);
+            border-radius: 40px;
+            background: rgba(10, 25, 47, 0.8);
+            box-shadow: 0 0 70px rgba(212, 175, 55, 0.15);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            word-spacing: 20px;
+        }
+
+        #game-screen, #end-screen { display: none; }
+        #start-screen { display: block; }
+
+        #sentence-display {
+            font-size: 3rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            font-weight: 700;
+            line-height: 1.5;
+            word-spacing: 15px; /* Сөз арасындағы арақашықтық */
+            color: var(--white);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            background: var(--gold);
+            color: var(--dark);
+            border: none;
+            padding: 22px 70px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .btn:hover {
+            transform: scale(1.05) translateY(-5px);
+            background: var(--white);
+            box-shadow: 0 0 50px var(--gold);
+        }
+
+        .btn-end {
+            background: transparent;
+            border: 2px solid var(--red);
+            color: var(--red);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            margin-top: 25px;
+            letter-spacing: 1px;
+        }
+
+        .btn-end:hover {
+            background: var(--red);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        #timer {
+            font-size: 3rem;
+            color: var(--red);
+            font-weight: 900;
+            margin: 15px 0;
+            height: 60px;
+            letter-spacing: 5px;
+        }
+
+        .counter {
+            position: absolute;
+            top: 25px;
+            right: 40px;
+            font-size: 1.3rem;
+            color: var(--gold);
+            font-weight: bold;
+            opacity: 0.7;
+        }
+
+        /* Инструкция стилі */
+        .mini-instruction {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .mini-instruction b {
+            color: var(--gold);
+            font-weight: 900;
+            margin-right: 5px;
+        }
+
+        .final-msg {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pattern-bg"></div>
+
+    <div class="game-container">
+        
+        <div id="start-screen">
+            <h1>ИӘ – ЖОҚ – ОЙ!</h1>
+            <p style="font-size: 1.6rem; margin-bottom: 45px; opacity: 0.9;">Сергіту сәтіне дайынсыз ба?</p>
+            <button class="btn" onclick="startGame()">ОЙЫНДЫ БАСТАУ 🛡️</button>
+        </div>
+
+        <div id="game-screen">
+            <div id="counter" class="counter"></div>
+            
+            <div id="sentence-display">Дайын бол!</div>
+            
+            <div id="timer"></div>
+            
+            <button class="btn" id="next-btn" onclick="nextSentence()">КЕЛЕСІ СӨЙЛЕМ ⚔️</button>
+            <br>
+            <button class="btn btn-end" onclick="endGame()">ОЙЫНДЫ АЯҚТАУ 🏁</button>
+
+            <div class="mini-instruction">
+                <div><span>😲</span> <b>ОҚШАУ СӨЗ БОЛСА:</b> «ОЙ!» деп айқайла</div>
+                <div><span>👏</span> <b>ОҚШАУ СӨЗ ЖОҚ БОЛСА:</b> «ИӘ» деп шапалақта</div>
+            </div>
+        </div>
+
+        <div id="end-screen">
+            <h2 class="final-msg">ЖАРАЙСЫҢДАР, БАТЫРЛАР! 🦅</h2>
+            <p style="font-size: 1.6rem; margin-bottom: 40px; opacity: 0.8;">Барлық тапсырма орындалды. Керемет жылдамдық!</p>
+            <button class="btn" onclick="location.reload()">ҚАЙТА БАСТАУ 🔄</button>
+        </div>
+
+    </div>
+
+    <script>
+        const sentences = [
+            { text: "Пай-пай, мына аттың жүрісін-ай!", type: "OY" },
+            { text: "Қазақ халқы — қонақжай халық.", type: "YE" },
+            { text: "Дәрігер, сізге көп рақмет!", type: "OY" },
+            { text: "Ер намысы — ел намысы.", type: "YE" },
+            { text: "Айналайын, сен нағыз ерсің!", type: "OY" },
+          
+         
+            { text: "Ой, қандай керемет мамансыз!", type: "OY" },
+            
+            { text: "Әрине, ол адамдарды құтқарды", type: "OY" },
+            { text: "Батырлар елін жаудан аман сақтады.", type: "YE" }
+        ];
+
+        let currentIndex = 0;
+        let countdown;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(freq, type, dur) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + dur);
+        }
+
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+            playSound(523.25, 'sine', 0.5); 
+            nextSentence();
+        }
+
+        function nextSentence() {
+            if (currentIndex >= sentences.length) {
+                endGame();
+                return;
+            }
+
+            clearInterval(countdown);
+            const current = sentences[currentIndex];
+            
+            document.getElementById('counter').innerText = `${currentIndex + 1} / ${sentences.length}`;
+            const display = document.getElementById('sentence-display');
+            display.innerText = current.text;
+            
+            // Анимация
+            display.style.opacity = 0;
+            display.style.transform = "scale(0.9)";
+            setTimeout(() => {
+                display.style.opacity = 1;
+                display.style.transform = "scale(1)";
+                display.style.transition = "0.3s ease";
+            }, 50);
+
+            playSound(440, 'sine', 0.1);
+
+            let timeLeft = 5;
+            const timerDisplay = document.getElementById('timer');
+            timerDisplay.innerText = "УАҚЫТ: " + timeLeft;
+            timerDisplay.style.color = "var(--red)";
+
+            countdown = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    timerDisplay.innerText = "ТОҚТА! 🛑";
+                    timerDisplay.style.color = "white";
+                    playSound(220, 'square', 0.3);
+                } else {
+                    timerDisplay.innerText = "УАҚЫТ: " + timeLeft;
+                    playSound(660, 'sine', 0.05);
+                }
+            }, 1000);
+
+            currentIndex++;
+        }
+
+        function endGame() {
+            clearInterval(countdown);
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('end-screen').style.display = 'block';
+            playSound(523.25, 'sine', 0.2);
+            setTimeout(() => playSound(659.25, 'sine', 0.2), 150);
+            setTimeout(() => playSound(783.99, 'sine', 0.4), 300);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+# qazaqtili7synyp
